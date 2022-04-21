@@ -1,0 +1,39 @@
+  $ 103 "u49828u47112u46300_1"
+  thread u49828u47112u46300_1():
+    while (True):
+      $ 104 "지정 conveyor=10.0"
+      set_standard_analog_out(1, 1.0)
+      $ 105 "기다림 right_sensor=HI"
+      while (get_standard_digital_in(2) == False):
+        sync()
+      end
+      $ 106 "conveyor_flag≔ True "
+      global conveyor_flag=  True  
+      $ 107 "지정 conveyor=0.0"
+      set_standard_analog_out(1, 0.0)
+      $ 108 "기다림 right_sensor=LO"
+      while (get_standard_digital_in(2) == True):
+        sync()
+      end
+    end
+  end
+  threadId_u49828u47112u46300_1 = run u49828u47112u46300_1()
+  thread EventThread():
+    while (True):
+      if (force_flag ==   True  ):
+        $ 135 "force_value≔force()"
+        global force_value= force ()
+        $ 136 "기다림: 0.1"
+        sleep(0.1)
+      elif (dry_flag ==   True  ):
+        $ 151 "dry_value≔analog_in[0]"
+        global dry_value=get_standard_analog_in(0)
+        $ 152 "지정 AO[0]=dry_value"
+        set_standard_analog_out(0, dry_value)
+        $ 153 "기다림: 0.1"
+        sleep(0.1)
+      end
+      sync()
+    end
+  end
+  eventThread = run EventThread()

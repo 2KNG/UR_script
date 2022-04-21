@@ -1,0 +1,12 @@
+# x, y, z setting by mm / fixed tcp axis z;
+# Developer : 2KNG / khkim1207@naver.com
+
+
+def set_xyz_position(x_point, y_point, z_point):
+    x_point = x_point / 1000
+    y_point = y_point / 1000
+    z_point = z_point / 1000
+
+    default_postion = p[x_point, y_point, z_point, 2.224, -2.262, 0]
+    return default_postion
+end

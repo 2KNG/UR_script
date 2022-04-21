@@ -1,0 +1,58 @@
+def product_info(product_num, num_of_item):
+    count = 0
+    menu = " "
+    while (count < num_of_item):
+        if product_num == 1:
+            y_postion = -0.29 + 0.06 * count_p1
+            movej(set_xyz_position(0.23, y_postion, 0.12))
+            movel(set_xyz_position(0.23, y_postion, 0.02))
+            sync()    
+            rg_grip(25, 40.0, tool_index = 0, blocking = True, depth_comp = False, popupmsg = True)
+            sync()
+            movel(set_xyz_position(0.23, y_postion, 0.12))
+            place_x_postion = -0.1 - 0.1 * count_p1
+            place_up_postion = set_xyz_position(place_x_postion, -0.25, 0.15)
+            place_down_postion = set_xyz_position(place_x_postion, -0.25, 0.085)
+            movej(place_up_postion)
+            movel(place_down_postion)
+            rg_grip(50, 40.0, tool_index = 0, blocking = True, depth_comp = False, popupmsg = True)
+            sync()
+            movel(place_up_postion)
+            sync()
+            count = count + 1
+            menu = "음료수"
+            global count_p1 = count_p1 + 1
+            if count_p1 == 3:
+              popup(str_cat("",menu)+"의 재고가 부족합니다. 물품을 채우고 계속을 눌려주세요.", "알림", False, False, blocking=True)
+              global count_p1 = 0
+            end
+        elif product_num == 2:
+            y_postion = -0.29 + 0.060 * count_p2
+            movej(set_xyz_position(0.29, y_postion, 0.12))
+            movel(set_xyz_position(0.29, y_postion, 0.02))
+            sync()
+            rg_grip(25, 40.0, tool_index = 0, blocking = True, depth_comp = False, popupmsg = True)
+            sync()
+            movel(set_xyz_position(0.29, y_postion, 0.12))
+            place_x_postion = -0.1 - 0.1 * count_p2
+            place_up_postion = set_xyz_position(place_x_postion, -0.25, 0.15)
+            place_down_postion = set_xyz_position(place_x_postion, -0.25, 0.085)
+            movej(place_up_postion)
+            movel(place_down_postion)
+            rg_grip(50, 40.0, tool_index = 0, blocking = True, depth_comp = False, popupmsg = True)
+            sync()
+            movel(place_up_postion)
+            sync()
+            count = count + 1
+            global count_p2 = count_p2 + 1
+            menu = "과자"
+            if count_p2 == 3:
+              popup(str_cat("",menu)+"의 재고가 부족합니다. 물품을 채우고 계속을 눌려주세요.", "알림", False, False, blocking=True)
+              global count_p2 = 0
+            end
+        sync()
+        end
+    end
+    popup(str_cat("",menu)+" "+str_cat("",num_of_item)+"개를 출고완료 했습니다", "맛있게 드십시오~", False, False, blocking=True)
+    return menu
+end

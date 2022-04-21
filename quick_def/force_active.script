@@ -1,0 +1,18 @@
+# For force load system
+# Developer : 2KNG / khkim1207@naver.com
+
+def force_active(force_power):
+    sleep(0.3)
+    zero_ftsensor()
+    sleep(0.2)
+    sleep(0.02)
+    zero_ftsensor()
+    force_mode(p[0.0,0.0,0.0,0.0,0.0,0.0], [0, 0, 1, 0, 0, 0], [0.0, 0.0, force_power, 0.0, 0.0, 0.0], 2, [0.1, 0.1, 0.2, 0.35, 0.35, 0.35])
+    if force_power < 0:
+        force_power = -force_power
+    while (not(force()> 2 * force_power)):
+      sync()
+    end
+    end_force_mode()
+    stopl(5.0)
+end

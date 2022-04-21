@@ -1,0 +1,54 @@
+default_postion = get_actual_tcp_pose()
+rg_grip(50,30)
+
+
+def pose_set_rz(default_postion, x_point, y_point, z_point, rz_value):
+    x_point = x_point / 1000
+    y_point = y_point / 1000
+    z_point = z_point / 1000
+    rz_value = d2r(rz_value)
+
+    move_position = pose_trans(default_postion, p[-x_point, y_point, 0, 0, 0, rz_value])
+    movej(move_position)
+    move_position[2] = move_position[2] - z_point 
+    # now_joint_pose = get_actual_joint_positions()
+    # now_joint_pose[5] = now_joint_pose[5] + rz_value
+    movel(move_position)
+    rg_grip(25, 30)
+    move_position[2] = move_position[2] + z_point
+    movel(move_position)
+
+    return get_actual_tcp_pose()
+end
+
+def pose_trans_rz(default_postion, x_point, y_point, z_point, rz_value):
+    x_point = x_point / 1000
+    y_point = y_point / 1000
+    z_point = z_point / 1000
+    rz_value = d2r(rz_value)
+
+    move_position = pose_trans(default_postion, p[x_point, y_point, 0, 0, 0, 0])
+    # pose_trans 는 기준 좌표계에서 tool 좌표계를 받아 움직이는 함수이다.
+    movej(move_position)
+    move_position[2] = move_position[2] + z_point
+    now_joint_pose = get_actual_joint_positions()
+    now_joint_pose[5] = now_joint_pose[5] + rz_value
+    movel(now_joint_pose)
+
+    return get_actual_tcp_pose()
+end
+
+def test_xyzrz_pose():    
+    x_point = request_integer_from_primary_client("x좌표 입력해라")
+    y_point = request_integer_from_primary_client("y좌표 입력해라")
+    z_point = request_integer_from_primary_client("z좌표 입력해라")
+    rz_value = request_integer_from_primary_client("rz값 입력해라")
+    
+    pose_set_rz(default_postion, x_point, y_point, z_point, rz_value)
+    sleep(1)
+
+    movej(default_postion)
+    rg_grip(50, 30)
+
+end
+    

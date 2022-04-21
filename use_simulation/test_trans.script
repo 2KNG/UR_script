@@ -1,0 +1,24 @@
+
+def pose_trans_rz(default_postion, rx_value, ry_value, rz_value):
+    rx_value = d2r(rx_value)
+    ry_value = d2r(ry_value)
+    rz_value = d2r(rz_value)
+
+    move_position = pose_trans(default_postion, p[0.1, 0.05, 0, rx_value, ry_value, rz_value])
+    movej(move_position)
+
+    return get_actual_tcp_pose()
+end
+
+def test_xyzrz_pose():    
+    x_point = request_integer_from_primary_client("rx 입력해라")
+    y_point = request_integer_from_primary_client("ry 입력해라")
+    z_point = request_integer_from_primary_client("rz 입력해라")
+    
+    moveing_pose = pose_trans_rz(default_postion, x_point, y_point, z_point)
+    sleep(1)
+
+    movej(default_postion)
+
+end
+    
